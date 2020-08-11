@@ -8,5 +8,19 @@ lazy val root = project
 
     scalaVersion := dottyVersion,
 
-    libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+    scalacOptions ++= Seq(
+      "-deprecation",
+      "-feature",
+      "-language:strictEquality",
+      "-migration",
+      "-unchecked",
+      // "-Yexplicit-nulls",
+      "-Yindent-colons",
+    ),
+
+    libraryDependencies ++= Seq(
+      "com.github.scopt" %% "scopt" % "4.0.0-RC2" withDottyCompat dottyVersion,
+      "com.lihaoyi" %% "fansi" % "0.2.7" withDottyCompat dottyVersion,
+      "com.novocode" % "junit-interface" % "0.11" % "test",
+    )
   )
