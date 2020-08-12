@@ -32,8 +32,11 @@ object Main:
     })
 
     for config <- parsed do
+      given Config = config
+
       val in = ut.Files.read(config.input)
-      ut.Files.write(config.output, in)
+      ut.Files.write(config.output, Rabi(in).generate())
+
       println(fansi.Color.Cyan(s"generated ${config.output}"))
 
 end Main
