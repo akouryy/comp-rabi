@@ -51,16 +51,17 @@ final class DoublyLinkedList[A](initialElements: IterableOnce[A] = Nil):
         case Some(n) => n.prev = e
         case None => _last = e
 
-    def insertBefore(a: A): Unit =
-      val entry = Some(Entry(a, prev, Some(this)))
-      val e = this
-      setPrevNext(entry)
-      prev = entry
+    def insertBefore(as: A*): Unit =
+      for a <- as do
+        val entry = Some(Entry(a, prev, Some(this)))
+        setPrevNext(entry)
+        prev = entry
 
-    def insertAfter(a: A): Unit =
-      val entry = Some(Entry(a, Some(this), next))
-      setNextPrev(entry)
-      next = entry
+    def insertAfter(as: A*): Unit =
+      for a <- as do
+        val entry = Some(Entry(a, Some(this), next))
+        setNextPrev(entry)
+        next = entry
 
     /**
      * removes `this` from the list.
