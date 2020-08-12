@@ -3,7 +3,7 @@ package rabi
 import java.io.File
 import scopt.{DefaultOParserSetup, OParser}
 
-object Rabi:
+object Main:
   val parser =
     val builder = OParser.builder[Config]
     import builder._
@@ -36,4 +36,4 @@ object Rabi:
       ut.Files.write(config.output, in)
       println(fansi.Color.Cyan(s"generated ${config.output}"))
 
-end Rabi
+end Main
