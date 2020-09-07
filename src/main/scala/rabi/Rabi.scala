@@ -18,16 +18,19 @@ final class Rabi(original: String)(using config: Config):
 
     for entry <- program do
       Preprocessor.all(Preprocessor.Env(entry, config, loaded, typeChars))()
+      println((entry.removed, "\t", entry.value))
 
     println(typeChars)
 
-    program.mapToSeq(e => s"${e.elem.content}\n").mkString
+    program.mapToSeq(e => s"${e.value.content}\n").mkString
 
 end Rabi
 
 object Rabi:
   final case class Line(file: String, index: Int, content: String):
-    override def toString: String = s"$file:$index"
+    override def toString: String = f"${s"$file:$index"}%-19s $content"
+
+    def shortString: String = s"$file:$index"
 
   def convertToLines(str: String, file: File): Seq[Line] =
     str.linesIterator.zipWithIndex.map((c, i) => Line(file.getName, i + 1, c)).toSeq

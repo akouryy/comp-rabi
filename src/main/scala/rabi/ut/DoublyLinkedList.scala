@@ -5,10 +5,10 @@ import scala.collection.{mutable, AbstractIterator}
 
 final class DoublyLinkedList[A](initialElements: IterableOnce[A] = Nil):
 
-  private var _head: Option[Entry] = None
+  private var _head = Option.empty[Entry]
   def headOption: Option[Entry] = _head
 
-  private var _last: Option[Entry] = None
+  private var _last = Option.empty[Entry]
   def lastOption: Option[Entry] = _last
 
   def isEmpty: Boolean = _head.isEmpty
@@ -37,7 +37,7 @@ final class DoublyLinkedList[A](initialElements: IterableOnce[A] = Nil):
   ++=(initialElements)
 
   final class Entry private[DoublyLinkedList](
-    val elem: A,
+    var value: A,
     private[DoublyLinkedList] var prev: Option[Entry],
     private[DoublyLinkedList] var next: Option[Entry],
   ):
@@ -63,6 +63,9 @@ final class DoublyLinkedList[A](initialElements: IterableOnce[A] = Nil):
         setNextPrev(entry)
         next = entry
 
+    private var _removed = false
+    def removed: Boolean = _removed
+
     /**
      * removes `this` from the list.
 
@@ -72,8 +75,9 @@ final class DoublyLinkedList[A](initialElements: IterableOnce[A] = Nil):
     def remove(): Unit =
       setPrevNext(next)
       setNextPrev(prev)
+      _removed = true
 
-    override def toString: String = s"Entry($elem, ${prev.productPrefix}, ${next.productPrefix})"
+    override def toString: String = s"Entry($value, ${prev.productPrefix}, ${next.productPrefix})"
   end Entry
 
   final class Iterator extends AbstractIterator[Entry]:

@@ -12,6 +12,7 @@
 *.log
 *~
 /.dotty-ide.json
+/.vscode/
 classes/
 dist/*
 lib_managed/
